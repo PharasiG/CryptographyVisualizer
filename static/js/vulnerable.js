@@ -247,10 +247,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // Combine output
         const output = [];
         if (vulnerabilities.length > 0) {
-            output.push("Detected Vulnerabilities:");
+            output.push("<strong style='font-size: 18px;'>Detected Vulnerabilities:</strong>");
             output.push(...vulnerabilities);
-            output.push("Relevant Attacks:");
-            output.push(...relevantAttacks);
+            output.push("<strong style='font-size: 18px;'>Prone to Attacks:</strong>");
+            output.push(...relevantAttacks);            
         } else {
             output.push("Configuration is secure. No known vulnerabilities detected.");
         }
