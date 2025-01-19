@@ -1,0 +1,146 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container to hold content */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Heading styles */
+h1, h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Challenge Page Styles */
+.challenge-header {
+    background-color: #0056b3;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.challenge-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.challenge-content p {
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form button:hover {
+    background-color: #003366;
+}
+
+/* Progress Page Styles */
+.progress-page {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.progress-page p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.progress-page .score {
+    font-weight: bold;
+    color: #00796b;
+}
+
+.progress-page .completion {
+    color: #d32f2f;
+}
+
+/* Game Over Page */
+.game-over {
+    text-align: center;
+    background-color: #ffeb3b;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-over h2 {
+    font-size: 2.5em;
+    color: #d32f2f;
+}
+
+.game-over .final-score {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.game-over button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.game-over button:hover {
+    background-color: #d32f2f;
+}
+
+/* Flash Message Styles */
+.flash {
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+      
+      
+      
+      

@@ -1,9 +1,150 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
 import RSA
 import AES
 import AffineCipher
+import base64
+import hmac
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Required for flashing messages
+
+class CryptoChallenge:
+    def __init__(self):
+        self.current_level = 1
+        self.max_level = 5
+        self.score = 0
+        self.flags = self._generate_flags()
+
+    def _generate_flags(self) -> dict:
+        """Generate unique flags for each level."""
+        return {
+            1: "FLAG{weak_des_not_recommended}",
+            2: "FLAG{ecb_mode_reveals_patterns}",
+            3: "FLAG{padding_oracle_vulnerability}",
+            4: "FLAG{key_reuse_danger}",
+            5: "FLAG{timing_attack_possible}"
+        }
+
+    def get_challenge(self):
+        """Return the current challenge based on level."""
+        challenges = {
+            1: self._create_level_one,
+            2: self._create_level_two,
+            3: self._create_level_three,
+            4: self._create_level_four,
+            5: self._create_level_five
+        }
+        return challenges[self.current_level]()
+
+    def _create_level_one(self):
+        """Level 1: Identify weak encryption (DES)"""
+        return {
+            "level": 1,
+            "title": "Basic Encryption Vulnerability",
+            "description": "Identify and fix the weak encryption algorithm being used.",
+            "hint": "Modern applications should avoid using DES.",
+            "encrypted_data": base64.b64encode(b"sample_encrypted_data").decode(),
+            "key": base64.b64encode(b"12345678").decode()
+        }
+
+    def _create_level_two(self):
+        """Level 2: ECB Mode Pattern Recognition"""
+        return {
+            "level": 2,
+            "title": "Block Cipher Mode Analysis",
+            "description": "Detect the vulnerable encryption mode and suggest a secure alternative.",
+            "hint": "Look for patterns in the encrypted data blocks.",
+            "encrypted_data": base64.b64encode(b"pattern_data" * 4).decode(),
+            "key": base64.b64encode(b"1234567890123456").decode()
+        }
+
+    def _create_level_three(self):
+        """Level 3: Padding Oracle Challenge"""
+        return {
+            "level": 3,
+            "title": "Padding Oracle Detection",
+            "description": "Find and fix the padding oracle vulnerability in the decryption process.",
+            "hint": "Check how padding errors are handled during decryption.",
+            "encrypted_data": base64.b64encode(b"paddingvulnerable").decode(),
+            "iv": base64.b64encode(b"1234567890123456").decode(),
+            "key": base64.b64encode(b"1234567890123456").decode()
+        }
+
+    def _create_level_four(self):
+        """Level 4: Key Reuse Detection"""
+        return {
+            "level": 4,
+            "title": "Key Management Security",
+            "description": "Identify the key management vulnerability in the encryption process.",
+            "hint": "Look for patterns that might emerge from key reuse.",
+            "encrypted_messages": [
+                base64.b64encode(b"message1").decode(),
+                base64.b64encode(b"message2").decode()
+            ],
+            "key": base64.b64encode(b"1234567890123456").decode()
+        }
+
+    def _create_level_five(self):
+        """Level 5: Timing Attack Vulnerability"""
+        return {
+            "level": 5,
+            "title": "Advanced Security Analysis",
+            "description": "Identify and fix the timing-based vulnerability in the comparison function.",
+            "hint": "Consider how execution time might reveal information.",
+            "secret": base64.b64encode(b"secret_data_here").decode()
+        }
+
+    def submit_solution(self, solution):
+        """Verify the submitted solution and return result"""
+        try:
+            required_fields = ["identified_vulnerability", "proposed_fix", "flag"]
+            if not all(field in solution for field in required_fields):
+                return False, "Missing required solution fields"
+
+            if solution["flag"] != self.flags[self.current_level]:
+                return False, "Incorrect flag"
+
+            if not self._verify_solution(solution):
+                return False, "Incorrect vulnerability identification or fix"
+
+            self.score += 10
+            if self.current_level < self.max_level:
+                self.current_level += 1
+
+            return True, f"Level {self.current_level - 1} completed! Score: {self.score}"
+
+        except Exception as e:
+            return False, f"Error processing solution: {str(e)}"
+
+    def _verify_solution(self, solution):
+        """Verify if the proposed solution correctly identifies and fixes the vulnerability"""
+        verification_checks = {
+            1: lambda s: "des" in s["identified_vulnerability"].lower() and "aes" in s["proposed_fix"].lower(),
+            2: lambda s: "ecb" in s["identified_vulnerability"].lower() and (
+                        "cbc" in s["proposed_fix"].lower() or "gcm" in s["proposed_fix"].lower()),
+            3: lambda s: "padding" in s["identified_vulnerability"].lower() and "constant time" in s[
+                "proposed_fix"].lower(),
+            4: lambda s: "key reuse" in s["identified_vulnerability"].lower() and "unique key" in s[
+                "proposed_fix"].lower(),
+            5: lambda s: "timing" in s["identified_vulnerability"].lower() and "constant time" in s[
+                "proposed_fix"].lower()  # Added check for constant-time comparison
+        }
+        return verification_checks[self.current_level](solution)
+
+    def get_progress(self):
+        """Return current progress and score"""
+        return {
+            "current_level": self.current_level,
+            "max_level": self.max_level,
+            "score": self.score,
+            "completion_percentage": (self.current_level - 1) * 100 // self.max_level
+        }
+
+
+
+# Initialize game instance globally
+game = CryptoChallenge()
+
 
 # Define the steps for each attack simulation
 MITM_STEPS = [
@@ -42,7 +183,8 @@ def vulnerable():
 
 @app.route('/gamify-learning')
 def gamify():
-    return render_template('gamify.html')
+    challenge = game.get_challenge()
+    return render_template('challenge.html', challenge=challenge)
 
 @app.route('/algorithm-visualizer')
 def visualizer():
@@ -148,6 +290,33 @@ def affine_cipher():
         "data": data,
     }
     return jsonify(response), 200
+
+@app.route('/submit_solution', methods=['POST'])
+def submit_solution():
+    """Route for submitting a solution"""
+    identified_vulnerability = request.form['identified_vulnerability']
+    proposed_fix = request.form['proposed_fix']
+    flag = request.form['flag']
+
+    solution = {
+        "identified_vulnerability": identified_vulnerability,
+        "proposed_fix": proposed_fix,
+        "flag": flag
+    }
+
+    success, message = game.submit_solution(solution)
+    flash(message)
+
+    if success:
+        progress = game.get_progress()
+        return render_template('progress.html', progress=progress)
+
+    return redirect(url_for('gamify'))
+
+@app.route('/game_over')
+def game_over():
+    """End game route"""
+    return render_template('game_over.html', score=game.score)
 
 if __name__ == '__main__':
     app.run(debug=True)

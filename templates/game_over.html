@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Over</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/new.css') }}">
+</head>
+<body>
+    <div class="container game-over">
+        <h2>Game Over!</h2>
+        <p>Congratulations! You have completed all levels.</p>
+        <p class="final-score">Your Final Score: {{ score }}</p>
+        <a href="{{ url_for('gamify') }}">
+            <button>Start Over</button>
+        </a>
+    </div>
+</body>
+</html>
+

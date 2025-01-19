@@ -132,3 +132,71 @@ input[type="text"], input[type="submit"] {
     font-size: 14px;
 }
 
+#roundSelector {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #d6aaff;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #9c74e6, #c7a5f4);
+    color: #4b2e83;  /* Dark purple text color */
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+#roundSelector:hover {
+    border-color: #a278e5;  /* Darker purple for hover effect */
+    background: linear-gradient(135deg, #8c64d4, #b89bfc); /* Slightly different gradient on hover */
+}
+
+#roundSelector:focus {
+    outline: none;
+    border-color: #8a4dd6;  /* Stronger purple for focus */
+    background: linear-gradient(135deg, #6c39bb, #a78bfc);  /* Different gradient when focused */
+}
+
+/* Style the options inside the select dropdown */
+#roundSelector option {
+    background-color: #f4f4f9;  /* Light background for options */
+    color: #4b2e83;  /* Dark purple text color for options */
+    padding: 8px;
+}
+
+#roundSelector option:hover {
+    background-color: #c7a5f4;  /* Light purple background on hover */
+    color: #fff;  /* White text when hovering over options */
+}
+
+
+#decryptionRoundSelector {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #d6aaff;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #9c74e6, #c7a5f4);
+    color: #4b2e83;  /* Dark purple text color */
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+#decryptionRoundSelector:hover {
+    border-color: #a278e5;  /* Darker purple for hover effect */
+    background: linear-gradient(135deg, #8c64d4, #b89bfc); /* Slightly different gradient on hover */
+}
+
+#decryptionRoundSelector:focus {
+    outline: none;
+    border-color: #8a4dd6;  /* Stronger purple for focus */
+    background: linear-gradient(135deg, #6c39bb, #a78bfc);  /* Different gradient when focused */
+}
+
+/* Style the options inside the select dropdown */
+#decryptionRoundSelector option {
+    background-color: #f4f4f9;  /* Light background for options */
+    color: #4b2e83;  /* Dark purple text color for options */
+    padding: 8px;
+}
+
+#decryptionRoundSelector option:hover {
+    background-color: #c7a5f4;  /* Light purple background on hover */
+    color: #fff;  /* White text when hovering over options */
+}

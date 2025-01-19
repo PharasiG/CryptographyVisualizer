@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoChallenge - Level {{ challenge.level }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/new.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="challenge-header">
+            <h1>{{ challenge.title }}</h1>
+        </div>
+
+        <div class="challenge-content">
+            <h2>Level {{ challenge.level }}</h2>
+            <p><strong>Description:</strong> {{ challenge.description }}</p>
+            <p><strong>Hint:</strong> {{ challenge.hint }}</p>
+
+            <form action="{{ url_for('submit_solution') }}" method="post">
+                <label for="identified_vulnerability">Identify the Vulnerability:</label>
+                <textarea name="identified_vulnerability" required></textarea>
+
+                <label for="proposed_fix">Propose a Fix:</label>
+                <textarea name="proposed_fix" required></textarea>
+
+                <label for="flag">Flag:</label>
+                <input type="text" name="flag" required>
+
+                <button type="submit">Submit Solution</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress - CryptoChallenge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/new.css') }}">
+</head>
+<body>
+    <div class="container progress-page">
+        <h2>Progress</h2>
+        <p><strong>Current Level:</strong> {{ progress.current_level }} of {{ progress.max_level }}</p>
+        <p class="score"><strong>Score:</strong> {{ progress.score }}</p>
+        <p class="completion"><strong>Completion:</strong> {{ progress.completion_percentage }}%</p>
+
+        <a href="{{ url_for('gamify') }}">
+            <button>Continue to Next Challenge</button>
+        </a>
+    </div>
+</body>
+</html>
+
