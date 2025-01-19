@@ -25,18 +25,28 @@ CipherHaven is an advanced cryptography platform that integrates multiple crypto
    
  ### Question/Answer
 ```
-"Weak encryption algorithm: DES"
-Replace DES with AES, which is more secure and modern."
-FLAG{weak_des_not_recommended
-Vulnerable encryption mode: ECB"
-Switch from ECB mode to CBC or GCM, which hide patterns in the data."
+1)
+Weak encryption algorithm: DES
+Replace DES with AES, which is more secure and modern.
+FLAG{weak_des_not_recommended}
+
+2)
+Vulnerable encryption mode: ECB
+Switch from ECB mode to CBC or GCM, which hide patterns in the data.
 FLAG{ecb_mode_reveals_patterns}
+
+3)
 Padding oracle vulnerability exists in the decryption process where error messages reveal information about padding
 Implement constant time padding validation and use generic error messages that don't reveal padding information
 FLAG{padding_oracle_vulnerability}
+
+4)
 Key reuse across multiple messages allows attackers to perform cryptanalysis by comparing ciphertexts encrypted with the same key
 Use unique keys for each encryption operation and implement proper key rotation policies
 FLAG(key_reuse_danger}
+
+5)
+Try it yourself!!😁
 ```
 
 ## Supported Algorithms
